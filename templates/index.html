@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Text-Based Story Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Text-Based Story Generator</h1>
+        <form id="storyForm">
+            <label for="startWord">Enter a Starting Word:</label>
+            <input type="text" id="startWord" name="start">
+            <button type="submit">Generate Story</button>
+        </form>
+        <div id="storyOutput">
+            <!-- Story will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("storyForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const startWord = document.getElementById("startWord").value;
+            fetch(`/generate?start=${startWord}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("storyOutput").innerHTML = `<p>${data}</p>`;
+                });
+        });
+    </script>
+</body>
+
+</html>
